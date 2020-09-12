@@ -8,6 +8,7 @@ const userSchema = new Schema({
     default: true
   },
   githubId: String,
+  googleId: String,
   avatar: String,
   name: String,
   role: {

@@ -14,10 +14,23 @@ router.get('/github', passport.authenticate('github'));
 router.get(
   '/auth/github/callback',
   passport.authenticate('github', {
-    successRedirect: '/',
-    failureRedirect: '/login'
+    successRedirect: '/bug-area',
+    failureRedirect: '/'
   })
 )
+
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/google/callback',
+  passport.authenticate('google', { failureRedirect: '/'}),
+  function(req, res) {
+    //console.log(req);
+    res.redirect('/bug-area')
+
+
+
+  });
 
 router.post('/signup', (req, res, next) => {
   const { email, password } = req.body;
@@ -65,14 +78,8 @@ router.post('/login', (req, res, next) => {
       if (bcrypt.compareSync(password, found.password)) {
 
         req.session.user = found;
-        console.log('ICH BIN DER USER ', req.session);
-        // Abfrage ob User.firstTime === true
-
-        if(found.firstSignin){
-          res.redirect('/firstSignin')
-        } else {
           res.redirect('/bug-area');
-        }
+
 
       } else {
         res.render('index', { message: 'Invalid credentials' });

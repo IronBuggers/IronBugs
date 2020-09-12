@@ -48,12 +48,13 @@ app.use(
       ttl: 24 * 60 * 60 * 1000
     })
   })
-)
-// End of Session config
+  )
+  // End of Session config
 
 const User = require('./models/User');
 const passport = require('passport');
 const GithubStrategy = require('passport-github').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcrypt');
 
 passport.serializeUser((user, done) => {
@@ -98,6 +99,30 @@ passport.use(
     }
   )
 )
+
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOne ({ googleId: profile.id })
+    .then(found => {
+      console.log(profile);
+      if (found !== null) {
+        done(null, found);
+      } else {
+        return User.create({ googleId: profile.id, name: profile._json.name, avatar: profile._json.picture }).then(dbUser => {
+          done(null, dbUser);
+        })
+      }
+    })
+    .catch(error => {
+      done(error);
+    })
+  }
+));
 
 app.use(passport.initialize());
 app.use(passport.session());
