@@ -8,52 +8,44 @@
                         </div>
                     </div>
                 </div>
+                <!-- end row -->
 
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="card">
                             <div class="card-body p-4">
                                 <div class="p-2">
-                                    <h5 class="mb-5 text-center">Login</h5>
-                                    <form class="form-horizontal" action="/login" method="POST">
+                                    <h5 class="mb-5 text-center">Signup</h5>
+                                    <form class="form-horizontal" action="/signup" method="POST">
 
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group mb-4">
                                                     <label for="email">E-Mail</label>
-                                                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter email" value="tolgakara2.0@gmail.com">
+                                                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
                                                 </div>
                                                 <div class="form-group mb-4">
                                                     <label for="password">Password</label>
-                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" value="qweasdyxc123">
+                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
                                                 </div>
                                                 <div class="mt-4">
-                                                    <button class="btn btn-success btn-block waves-effect waves-light" type="submit">Log In</button>
+                                                    <button class="btn btn-success btn-block waves-effect waves-light" type="submit">Signup</button>
                                                 </div>
                                                 <div class="mt-4 text-center">
-                                                    <a href="/github" class="text-muted"> Log in with <strong>GitHub</strong></a>
-                                                </div>
-                                                <div class="mt-4 text-center">
-                                                    <a href="/google" class="text-muted"> Log in with <strong>G-Mail</strong></a>
-                                                </div>
-                                                <div class="mt-4 text-center">
-                                                    <a href="/signup" class="text-muted"><i class="mdi mdi-account-circle mr-1"></i> Create an account</a>
+                                                    <a href="/" class="text-muted"><i class="mdi mdi-account-circle mr-1"></i> Already have an Account?</a>
                                                 </div>
                                             </div>
                                         </div>
-                                        {{#if message}}
-                                             <p style="color: red">{{message}}</p>
-                                        {{/if}}
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <!-- end row -->
             </div>
         </div>
-
+        <!-- end Account pages -->
 
 
 
