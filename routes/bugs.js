@@ -43,7 +43,7 @@ router.get('/bugs/add', (req, res) => {
 router.get('/bugs/:id', (req, res) => {
     const id = req.params.id
     Bug.findById(id).then(bugFromDB => {
-      res.render('bugDetails', { bug: bugFromDB });
+      res.render('bugDetails', { bug: bugFromDB, currentUser: req.user });
     })
     .catch(error => {
         console.log(error);
@@ -89,7 +89,7 @@ router.get('/bugs/:id', (req, res) => {
       res.redirect(`/bugs/${bug._id}`)
     })
     .catch(error => {
-      console.log(err);
+      console.log(error);
     })
   })
 

@@ -3,9 +3,15 @@
 <span>Desription: {{description}}</span>
 <p>{{image}}</p>
 
-<a href="/bugs/edit/{{_id}}">Edit this Bug</a>
+<p>Creation date: {{date}}</p>
+<p>Bug Number: </p>
+<p>Status: </p>
+<p>Bootcamp: </p>
+{{/with}}
+<p>Author: {{ currentUser.email }} </p>
 
-<a href="/bugs/delete/{{_id}}">Delete this Bug</a>
+<a href="/bugs/edit/{{bug._id}}">Edit this Bug</a>
+
+<a href="/bugs/delete/{{bug._id}}">Delete this Bug</a>
 
 <button><a href="/bugArea">Back to All Bugs</a></button>
-{{/with}}

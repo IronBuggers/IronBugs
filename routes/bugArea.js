@@ -4,7 +4,7 @@ const router = express.Router()
 /* GET home page */
 
 router.get("/userProfile", (req, res, next) => {
-	res.render("userProfile", { currentUser: req.user })
+	res.render("userProfile", { currentUser: req.user})
 })
 
 

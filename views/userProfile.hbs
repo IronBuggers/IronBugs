@@ -3,6 +3,13 @@
 <p> Show user information here</p>
 
 
-<p>My Bugs: show all the reported bugs by the user... if the User does not have any bugs show "You still don't have any Bugs reported 😢 Wanna report one now? - <button><a href="/addBug"> Report a Bug</a></button></p>
+<p>My Reported Bugs</p> 
+  {{#each bugsList}}
+<p>
+  <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
+</p>
+{{/each}}
 
+<p>show all the reported bugs by the user... if the User does not have any bugs show "You still don't have any Bugs reported 😢 Wanna report one now? - </p>
+<button><a href="/addBug"> Report a Bug</a></button>
 <button><a href="/bugArea">See all the Bugs</a></button></p>

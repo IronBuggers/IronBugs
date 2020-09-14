@@ -16,6 +16,10 @@ const userSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user'
   },
+  votes: [
+    {type: Schema.Types.ObjectId, ref: 'Bug'} 
+  ],
+  bootcamp: String,
 
 });
 
