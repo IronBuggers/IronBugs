@@ -169,7 +169,7 @@ app.set("view engine", "hbs")
 app.use(express.static(path.join(__dirname, "public")))
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")))
 
-// const middleware = require('./routes/middlewares');
+const middlewares = require('./routes/middlewares');
 
 // default value for title local
 app.locals.title = "IronBugs - The place for freedom of toughts!"
