@@ -29,10 +29,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
-
 // session configuration
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const session = require("express-session")
+const MongoStore = require("connect-mongo")(session)
 
 app.use(
   session({
@@ -60,18 +59,18 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 passport.serializeUser((user, done) => {
-  done(null, user._id);
-});
+	done(null, user._id)
+})
 
 passport.deserializeUser((id, done) => {
-  User.findById(id)
-    .then(dbUser => {
-      done(null, dbUser);
-    })
-    .catch(error => {
-      done(error);
-    })
-});
+	User.findById(id)
+		.then((dbUser) => {
+			done(null, dbUser)
+		})
+		.catch((error) => {
+			done(error)
+		})
+})
 
 passport.use(
   new LocalStrategy(
@@ -122,34 +121,38 @@ passport.use(
   )
 )
 
+passport.use(
+	new GoogleStrategy(
+		{
+			clientID: process.env.GOOGLE_CLIENT_ID,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			callbackURL: "http://localhost:3000/google/callback",
+		},
+		function (accessToken, refreshToken, profile, done) {
+			User.findOne({ googleId: profile.id })
+				.then((found) => {
+					console.log(profile)
+					if (found !== null) {
+						done(null, found)
+					} else {
+						return User.create({
+							googleId: profile.id,
+							name: profile._json.name,
+							avatar: profile._json.picture,
+						}).then((dbUser) => {
+							done(null, dbUser)
+						})
+					}
+				})
+				.catch((error) => {
+					done(error)
+				})
+		}
+	)
+)
 
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/google/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOne ({ googleId: profile.id })
-    .then(found => {
-      console.log(profile);
-      if (found !== null) {
-        done(null, found);
-      } else {
-        return User.create({ googleId: profile.id, name: profile._json.name, avatar: profile._json.picture }).then(dbUser => {
-          done(null, dbUser);
-        })
-      }
-    })
-    .catch(error => {
-      done(error);
-    })
-  }
-));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Express View engine setup
 
@@ -178,7 +181,7 @@ const auth = require("./routes/auth")
 app.use("/", auth)
 
 const bugArea = require("./routes/bugArea")
-app.use("/", bugArea)
+app.use("/", middlewares.loginCheck(), bugArea)
 
 const bugs = require("./routes/bugs")
 app.use("/", bugs)

@@ -1,14 +1,58 @@
-<p> Hello {{ currentUser.email }}</p>
 
-{{!-- {{#if currentUser.firstSignin}} --}}
-  USER is first time Signed
-  <br>
-  AREA where the form get displayed
+{{#if currentUser.firstSignin}}
+<h3 class="text-center"><span class="text-primary">Welcome to IronBugs!</span> <br> In order to finalize your Profile, please fill up the <strong>form</strong></h3>
 
-  {{!-- {{else}} --}}
+  <form action="/bugArea/form/{{currentUser._id}}" method="POST" enctype="multipart/form-data">
+
+<div class="input-group">
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" name="image" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+    <label class="custom-file-label" for="inputGroupFile04">Choose an Profile Image</label>
+  </div>
+
+</div>
+
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Name</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" name='name' placeholder="Max Mustermann" value="{{currentUser.name}}" required>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Bootcamp</label>
+    <select class="form-control" id="exampleFormControlSelect1" name='bootcamp'>
+      <option>Web Development</option>
+      <option>Data Analytics</option>
+      <option>UI / UX</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">Type</label>
+    <select class="form-control" id="exampleFormControlSelect2" name="type">
+      <option>Full Time (FT)</option>
+      <option>Part Time (PT)</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Location</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="location">
+      <option>Berlin</option>
+      <option>Amsterdam</option>
+      <option>Madrid</option>
+      <option>Miami</option>
+      <option>Sao Paulo</option>
+      <option>Barcelona</option>
+      <option>Lissabon</option>
+      <option>Mexico City</option>
+      <option>Paris</option>
+    </select>
+  </div>
+
+  <button class="btn btn-success btn-large" type="submit">Submit the Form</button>
+</form>
+
+  {{else}}
   The user is not first time signed in
   <br>
-  
   Show Bugs
   {{#each bugsList}}
 <p>
@@ -17,12 +61,13 @@
 {{/each}}
   <br>
 
-
 <button type="submit"><a href="/addBug"> REPORT A BUG</a></button>
 <br>
 <button type="button"><a href="/userProfile"> Go to my profile</a></button>
 <br>
 <button type="submit"><a href="/logout">Log Out</a></button>
-{{!-- {{/if}} --}}
+
+{{/if}}
+
 
 

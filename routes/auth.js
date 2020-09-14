@@ -1,17 +1,17 @@
 const express = require("express")
 const router = express.Router()
-const User = require('../models/User');
-const bcrypt = require('bcrypt')
-const passport = require('passport');
+const User = require("../models/User")
+const bcrypt = require("bcrypt")
+const passport = require("passport")
 
 /* GET home page */
 router.get("/signup", (req, res, next) => {
 	res.render("signup")
 })
 
-router.get("/firstSignin", (req, res, next) => {
-	res.render("firstSignin")
-})
+// router.get("/firstSignin", (req, res, next) => {
+// 	res.render("firstSignin")
+// })
 
 router.get('/github', passport.authenticate('github'));
 
@@ -23,17 +23,14 @@ router.get(
   })
 )
 
-router.get('/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }))
+
 
 router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/'}),
   function(req, res) {
     //console.log(req);
     res.redirect('/bugArea')
-
-
-
   });
 
 router.post('/signup', (req, res, next) => {
