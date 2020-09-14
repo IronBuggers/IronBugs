@@ -44,6 +44,11 @@ router.get("/firstSignin", (req, res, next) => {
 	res.render("firstSignin");
 });
 
+router.get("/userProfile", (req, res, next) => {
+	res.render("userProfile", { currentUser: req.user})
+})
+
+
 router.get("/profile/:user-name");
 
 module.exports = router;
