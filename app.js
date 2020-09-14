@@ -52,9 +52,11 @@ app.use(
   // End of Session config
 
 const User = require('./models/User');
+const Bug = require('./models/Bug');
 const passport = require('passport');
 const GithubStrategy = require('passport-github').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 passport.serializeUser((user, done) => {
@@ -70,6 +72,25 @@ passport.deserializeUser((id, done) => {
       done(error);
     })
 });
+
+passport.use(
+  new LocalStrategy((email, password, done) => {
+    User.findOne({ email: email })
+      .then(found => {
+        if (found === null) {
+          done(null, false, { message: 'Wrong Credentials' })
+        } else if (!bcrypt.compareSync(password, found.password)) {
+          done(null, false, { message: 'Wrong Credentials' })
+        } else {
+          done(null, found);
+        }
+      })
+      .catch(error => {
+        done(error, false);
+      })
+  })
+)
+
 
 passport.use(
   new GithubStrategy(
@@ -144,6 +165,8 @@ app.set("view engine", "hbs")
 app.use(express.static(path.join(__dirname, "public")))
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")))
 
+// const middleware = require('./routes/middlewares');
+
 // default value for title local
 app.locals.title = "IronBugs - The place for freedom of toughts!"
 
@@ -155,5 +178,9 @@ app.use("/", auth)
 
 const bugArea = require("./routes/bugArea")
 app.use("/", bugArea)
+
+const bugs = require("./routes/bugs")
+app.use("/", bugs)
+
 
 module.exports = app

@@ -9,6 +9,10 @@ router.get("/signup", (req, res, next) => {
 	res.render("signup")
 })
 
+router.get("/firstSignin", (req, res, next) => {
+	res.render("firstSignin")
+})
+
 router.get('/github', passport.authenticate('github'));
 
 router.get(
@@ -63,41 +67,20 @@ router.post('/signup', (req, res, next) => {
 
 });
 
-router.post('/login', (req, res, next) => {
-  console.log('Wir sind im Pfad Login');
-  const { email, password } = req.body;
-  // console.log(req.body);
-  User.findOne({ email: email })
-    .then(found => {
-
-      if (found === null) {
-        res.render('index', { message: 'Invalid credentials' });
-        return;
-      }
-
-      if (bcrypt.compareSync(password, found.password)) {
-
-        req.session.user = found;
-          res.redirect('/bugArea');
-
-
-      } else {
-        res.render('index', { message: 'Invalid credentials' });
-      }
-    })
-    .catch(error => {
-      next(error);
-    })
-});
+router.post(
+  '/login',
+  passport.authenticate('local', {
+    successRedirect: '/bugArea',
+    failureRedirect: '/',
+    passReqToCallBack: true
+  })
+  
+);
 
 router.get('/logout', (req, res) => {
-  req.session.destroy(error => {
-    if (error) {
-      next(error);
-    } else {
-      res.redirect('/');
-    }
-  })
+  req.logout();
+  console.log('Logut works', req.user);
+  res.redirect('/');
 })
 
 module.exports = router

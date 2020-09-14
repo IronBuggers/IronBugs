@@ -1,20 +1,28 @@
-<p> Hello </p>
+<p> Hello {{ currentUser.email }}</p>
 
-{{#if currentUser.firstSignin}}
+{{!-- {{#if currentUser.firstSignin}} --}}
   USER is first time Signed
   <br>
   AREA where the form get displayed
 
-  {{else}}
+  {{!-- {{else}} --}}
   The user is not first time signed in
   <br>
+  
   Show Bugs
+  {{#each bugsList}}
+<p>
+  <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
+</p>
+{{/each}}
   <br>
+
+
 <button type="submit"><a href="/addBug"> REPORT A BUG</a></button>
 <br>
 <button type="button"><a href="/userProfile"> Go to my profile</a></button>
 <br>
 <button type="submit"><a href="/logout">Log Out</a></button>
-{{/if}}
+{{!-- {{/if}} --}}
 
 

@@ -4,13 +4,13 @@ const bugSchema = new Schema({
   title: String,
   description: String,
   image: String,
-  anonymous: {
-    type: String,
-    enum: ['anonymous', 'public'],
-    default: 'public'
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 
 });
 
 const Bug = mongoose.model('Bug', bugSchema);
+
 module.exports = Bug;
