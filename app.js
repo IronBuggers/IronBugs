@@ -34,27 +34,29 @@ const session = require("express-session")
 const MongoStore = require("connect-mongo")(session)
 
 app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-		cookie: { maxAge: 24 * 60 * 60 * 1000 },
-		saveUninitialized: false,
-		resave: true,
-		store: new MongoStore({
-			// when the session cookie has an expiration date
-			// connect-mongo will use it, otherwise it will create a new
-			// one and use ttl - time to live - in that case one day
-			mongooseConnection: mongoose.connection,
-			ttl: 24 * 60 * 60 * 1000,
-		}),
-	})
-)
-// End of Session config
+  session({
+    secret: process.env.SESSION_SECRET,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 },
+    saveUninitialized: false,
+    resave: true,
+    store: new MongoStore({
+      // when the session cookie has an expiration date
+      // connect-mongo will use it, otherwise it will create a new
+      // one and use ttl - time to live - in that case one day
+      mongooseConnection: mongoose.connection,
+      ttl: 24 * 60 * 60 * 1000
+    })
+  })
+  )
+  // End of Session config
 
-const User = require("./models/User")
-const passport = require("passport")
-const GithubStrategy = require("passport-github").Strategy
-const GoogleStrategy = require("passport-google-oauth20").Strategy
-const bcrypt = require("bcrypt")
+const User = require('./models/User');
+const Bug = require('./models/Bug');
+const passport = require('passport');
+const GithubStrategy = require('passport-github').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 
 passport.serializeUser((user, done) => {
 	done(null, user._id)
@@ -71,36 +73,52 @@ passport.deserializeUser((id, done) => {
 })
 
 passport.use(
-	new GithubStrategy(
-		{
-			clientID: process.env.GITHUB_ID,
-			clientSecret: process.env.GITHUB_SECRET,
-			callbackURL: "http://127.0.0.1:3000/auth/github/callback",
-		},
-		(accessToken, refreshToken, profile, done) => {
-			// find a user with profile.id as githubId or create one
-			console.log(profile)
-			User.findOne({ githubId: profile.id })
-				.then((found) => {
-					if (found !== null) {
-						// user already exists
-						done(null, found)
-					} else {
-						// no user with that github id
-						return User.create({
-							githubId: profile.id,
-							name: profile._json.login,
-							avatar: profile._json.avatar_url,
-						}).then((dbUser) => {
-							done(null, dbUser)
-						})
-					}
-				})
-				.catch((error) => {
-					done(error)
-				})
-		}
-	)
+  new LocalStrategy(
+    (username, password, done) => {
+    User.findOne({ email: username })
+      .then(found => {
+        if (found === null) {
+          done(null, false, { message: 'Wrong Credentials' })
+        } else if (!bcrypt.compareSync(password, found.password)) {
+          done(null, false, { message: 'Wrong Credentials' })
+        } else {
+          done(null, found);
+        }
+      })
+      .catch(error => {
+        done(error, false);
+      })
+  })
+)
+
+
+passport.use(
+  new GithubStrategy(
+    {
+      clientID: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+      callbackURL: 'http://127.0.0.1:3000/auth/github/callback'
+    },
+    (accessToken, refreshToken, profile, done) => {
+      // find a user with profile.id as githubId or create one
+      console.log(profile);
+      User.findOne({ githubId: profile.id })
+        .then(found => {
+          if (found !== null) {
+            // user already exists
+            done(null, found);
+          } else {
+            // no user with that github id
+            return User.create({ githubId: profile.id, name: profile._json.login, avatar: profile._json.avatar_url }).then(dbUser => {
+              done(null, dbUser);
+            })
+          }
+        })
+        .catch(error => {
+          done(error);
+        })
+    }
+  )
 )
 
 passport.use(
@@ -151,11 +169,10 @@ app.set("view engine", "hbs")
 app.use(express.static(path.join(__dirname, "public")))
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")))
 
-//MIDDLEWARE
-const middlewares = require("./routes/middlewares")
+// const middleware = require('./routes/middlewares');
 
 // default value for title local
-app.locals.title = "Express - Generated with IronGenerator"
+app.locals.title = "IronBugs - The place for freedom of toughts!"
 
 const index = require("./routes/index")
 app.use("/", index)
@@ -165,5 +182,9 @@ app.use("/", auth)
 
 const bugArea = require("./routes/bugArea")
 app.use("/", middlewares.loginCheck(), bugArea)
+
+const bugs = require("./routes/bugs")
+app.use("/", bugs)
+
 
 module.exports = app

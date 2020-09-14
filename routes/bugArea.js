@@ -4,6 +4,7 @@ const router = express.Router();
 const { uploader, cloudinary } = require("../config/cloudinary.js");
 
 /* GET home page */
+
 router.get("/bugArea", (req, res, next) => {
 	console.log(req.user);
 	res.render("bugArea", { currentUser: req.user });
@@ -46,3 +47,4 @@ router.get("/firstSignin", (req, res, next) => {
 router.get("/profile/:user-name");
 
 module.exports = router;
+

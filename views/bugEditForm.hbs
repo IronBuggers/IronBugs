@@ -1,0 +1,13 @@
+{{#with bug}}
+<form action="/bugs/edit/{{_id}}" method="POST">
+
+<label for="description">Description:</label>
+<input type="text" name="description" id="description" value="{{description}}">
+
+{{!-- Image --}}
+
+<button type="submit">Edit this Bug</button>
+<button type="submit"><a href="/bugArea">Cancel</a></button>
+
+</form>
+{{/with}}
