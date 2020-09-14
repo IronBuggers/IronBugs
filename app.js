@@ -74,8 +74,9 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(
-  new LocalStrategy((email, password, done) => {
-    User.findOne({ email: email })
+  new LocalStrategy(
+    (username, password, done) => {
+    User.findOne({ email: username })
       .then(found => {
         if (found === null) {
           done(null, false, { message: 'Wrong Credentials' })
