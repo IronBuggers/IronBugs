@@ -14,7 +14,7 @@ router.get('/github', passport.authenticate('github'));
 router.get(
   '/auth/github/callback',
   passport.authenticate('github', {
-    successRedirect: '/bug-area',
+    successRedirect: '/bugArea',
     failureRedirect: '/'
   })
 )
@@ -26,7 +26,7 @@ router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/'}),
   function(req, res) {
     //console.log(req);
-    res.redirect('/bug-area')
+    res.redirect('/bugArea')
 
 
 
@@ -66,7 +66,7 @@ router.post('/signup', (req, res, next) => {
 router.post('/login', (req, res, next) => {
   console.log('Wir sind im Pfad Login');
   const { email, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   User.findOne({ email: email })
     .then(found => {
 
@@ -78,7 +78,7 @@ router.post('/login', (req, res, next) => {
       if (bcrypt.compareSync(password, found.password)) {
 
         req.session.user = found;
-          res.redirect('/bug-area');
+          res.redirect('/bugArea');
 
 
       } else {
