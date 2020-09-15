@@ -1,14 +1,20 @@
 {{#with bug}}
 <h1>{{title}}</h1>
 <span>Desription: {{description}}</span>
-<p>{{image}}</p>
+<img src="{{imgPath}}" alt="{{imgName}}"> 
 
 <p>Creation date: {{date}}</p>
 <p>Bug Number: </p>
 <p>Status: </p>
 <p>Bootcamp: </p>
+{{#if anonym}}
+  <p>Author: Crazy Bugger </p>
+{{else}}
+  <p>Author: {{ currentUser.name }} </p>
+{{/if}}
+
 {{/with}}
-<p>Author: {{ currentUser.email }} </p>
+
 
 <a href="/bugs/edit/{{bug._id}}">Edit this Bug</a>
 

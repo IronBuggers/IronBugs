@@ -3,14 +3,29 @@ const Schema = mongoose.Schema;
 const bugSchema = new Schema({
   title: String,
   description: String,
-  image: String,
+  imgName: {
+    type: String,
+    default: "",
+  },
+  imgPath: {
+    type: String,
+    default: "",
+  },
+  imgPublicId: {
+    type: String,
+    default: "",
+  },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
+  anonym: {
+    type: Boolean,
+    default: false,
+  },
   date: String,
   number: String,
-  Status: String,
+  status: String,
 
 });
 

@@ -1,10 +1,10 @@
 {{#with bug}}
-<form action="/bugs/edit/{{_id}}" method="POST">
+<form action="/bugs/edit/{{_id}}" method="POST" enctype="multipart/form-data">
 
 <label for="description">Description:</label>
 <input type="text" name="description" id="description" value="{{description}}">
 
-{{!-- Image --}}
+<input type="file" name="bugEditImg" id="bugEditImg">
 
 <button type="submit">Edit this Bug</button>
 <button type="submit"><a href="/bugArea">Cancel</a></button>
