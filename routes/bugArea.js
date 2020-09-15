@@ -5,10 +5,10 @@ const { uploader, cloudinary } = require("../config/cloudinary.js");
 
 /* GET home page */
 
-router.get("/bugArea", (req, res, next) => {
-	console.log(req.user);
-	res.render("bugArea", { currentUser: req.user });
-});
+// router.get("/bugArea", (req, res, next) => {
+// 	console.log(req.user);
+// 	res.render("bugArea", { currentUser: req.user });
+// });
 
 router.post("/bugArea/form/:userId", uploader.single("image"), (req, res, next) => {
 	const userId = req.params.userId;
