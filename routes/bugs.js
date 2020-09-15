@@ -9,7 +9,7 @@ router.get("/addBug", (req, res, next) => {
 	res.render("addBug")
 })
 
-router.post('/bugs', uploader.single('bugImg'), (req, res) => {
+router.post('/bugs', uploader.single('bugImg'), async (req, res) => {
   const imgName = req.file.originalname;
   const imgPath = req.file.url;
   const imgPublicId = req.file.public_id;
@@ -19,7 +19,12 @@ router.post('/bugs', uploader.single('bugImg'), (req, res) => {
   } else {
     anonym = false
   }
-  console.log('I am in');
+  // console.log('I am in');
+  // let bugCounter = Bug.count({}, function(error, numOfDocs) {
+  //   if (error) console.log("Count is not working");
+  //   console.log(numOfDocs);
+  // })
+  let bugCounter = await Bug.find()
   const {title, description, image} = req.body;
   Bug.create({
     title,
@@ -28,6 +33,8 @@ router.post('/bugs', uploader.single('bugImg'), (req, res) => {
     imgPath,
     imgPublicId,
     anonym,
+    userId: req.user._id,
+    bugnumber: bugCounter.length +1,
   }).then(bug => {
     console.log(`new Bug is here: ${bug}`);
     res.redirect(`/bugs/${bug._id}`)

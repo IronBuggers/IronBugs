@@ -23,11 +23,15 @@ const bugSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  date: String,
-  number: String,
+  bugnumber: Number,
   status: String,
 
+} ,
+{
+  timestamps: true
 });
+
+
 
 const Bug = mongoose.model('Bug', bugSchema);
 
