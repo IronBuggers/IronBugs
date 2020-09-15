@@ -2,18 +2,39 @@ const express = require('express');
 const router  = express.Router();
 const Bug = require('../models/Bug');
 const middleware = require('./middlewares');
+const { uploader, cloudinary } = require("../config/cloudinary.js");
+
 
 router.get("/addBug", (req, res, next) => {
 	res.render("addBug")
 })
 
-router.post('/bugs', (req, res) => {
-  console.log('I am in');
+router.post('/bugs', uploader.single('bugImg'), async (req, res) => {
+  const imgName = req.file.originalname;
+  const imgPath = req.file.url;
+  const imgPublicId = req.file.public_id;
+  let anonym = req.body.anonym
+  if (anonym === 'on') {
+    anonym = true
+  } else {
+    anonym = false
+  }
+  // console.log('I am in');
+  // let bugCounter = Bug.count({}, function(error, numOfDocs) {
+  //   if (error) console.log("Count is not working");
+  //   console.log(numOfDocs);
+  // })
+  let bugCounter = await Bug.find()
   const {title, description, image} = req.body;
   Bug.create({
-    title: title,
-    description: description,
-    image: image,
+    title,
+    description,
+    imgName,
+    imgPath,
+    imgPublicId,
+    anonym,
+    userId: req.user._id,
+    bugnumber: bugCounter.length +1,
   }).then(bug => {
     console.log(`new Bug is here: ${bug}`);
     res.redirect(`/bugs/${bug._id}`)
@@ -43,7 +64,11 @@ router.get('/bugs/add', (req, res) => {
 router.get('/bugs/:id', (req, res) => {
     const id = req.params.id
     Bug.findById(id).then(bugFromDB => {
-      res.render('bugDetails', { bug: bugFromDB, currentUser: req.user });
+      let isUserBug = '' + bugFromDB.userId == '' + req.user._id
+      console.log(bugFromDB.userId);
+      console.log(req.user._id);
+      console.log(isUserBug);
+      res.render('bugDetails', { bug: bugFromDB, currentUser: req.user, isUserBug: isUserBug });
     })
     .catch(error => {
         console.log(error);
@@ -66,27 +91,31 @@ router.get('/bugs/:id', (req, res) => {
       })
   });
 
-  router.get('/bugs/delete/:id', (req, res) => {
-    const id = req.params.id
-    Bug.findByIdAndDelete(id)
-    .then(() => {
-      res.redirect('/bugArea');
+  router.post('/bugs/edit/:id', uploader.single('bugEditImg'), (req, res) => {
+    const imgName = req.file.originalname;
+    const imgPath = req.file.url;
+    const imgPublicId = req.file.public_id;
+    const {description} = req.body;
+    const id = req.params.id;
+    Bug.findByIdAndUpdate(id, {
+      description,
+      imgName,
+      imgPath,
+      imgPublicId,
+    })
+    .then(bug => {
+      res.redirect(`/bugs/${bug._id}`)
     })
     .catch(error => {
       console.log(error);
     })
   })
 
-  router.post('/bugs/edit/:id', (req, res) => {
-    const {title, description, image} = req.body;
-    const id = req.params.id;
-    Bug.findByIdAndUpdate(id, {
-      title: title,
-      description: description,
-      image: image,
-    })
-    .then(bug => {
-      res.redirect(`/bugs/${bug._id}`)
+  router.get('/bugs/delete/:id', (req, res) => {
+    const id = req.params.id
+    Bug.findByIdAndDelete(id)
+    .then(() => {
+      res.redirect('/bugArea');
     })
     .catch(error => {
       console.log(error);

@@ -1,17 +1,26 @@
 {{#with bug}}
 <h1>{{title}}</h1>
 <span>Desription: {{description}}</span>
-<p>{{image}}</p>
+<img src="{{imgPath}}" alt="{{imgName}}"> 
 
-<p>Creation date: {{date}}</p>
-<p>Bug Number: </p>
+<p>Creation date: {{createdAt}}</p>
+<p>Bug Number: {{bugnumber}} </p>
 <p>Status: </p>
 <p>Bootcamp: </p>
+{{#if anonym}}
+  <p>Author: Crazy Bugger </p>
+{{else}}
+  <p>Author: {{ currentUser.name }} </p>
+{{/if}}
+
+
 {{/with}}
-<p>Author: {{ currentUser.email }} </p>
 
-<a href="/bugs/edit/{{bug._id}}">Edit this Bug</a>
+{{#if isUserBug}}
+  <a href="/bugs/edit/{{bug._id}}">Edit this Bug</a>
 
-<a href="/bugs/delete/{{bug._id}}">Delete this Bug</a>
+  <a href="/bugs/delete/{{bug._id}}">Delete this Bug</a>
+{{/if}}
+
 
 <button><a href="/bugArea">Back to All Bugs</a></button>

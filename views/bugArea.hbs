@@ -51,11 +51,11 @@
 </form>
 
   {{else}}
-  The user is not first time signed in
   <h1>Hello {{ currentUser.name }}</h1>
   <br>
   Show Bugs
   {{#each bugsList}}
+
 <p>
   <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
 </p>
