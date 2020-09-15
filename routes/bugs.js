@@ -3,6 +3,7 @@ const router  = express.Router();
 const Bug = require('../models/Bug');
 const middleware = require('./middlewares');
 const { uploader, cloudinary } = require("../config/cloudinary.js");
+const User = require('../models/User')
 
 
 router.get("/addBug", (req, res, next) => {
@@ -64,11 +65,12 @@ router.get('/bugs/add', (req, res) => {
 router.get('/bugs/:id', (req, res) => {
     const id = req.params.id
     Bug.findById(id).then(bugFromDB => {
-      let isUserBug = '' + bugFromDB.userId == '' + req.user._id
-      console.log(bugFromDB.userId);
-      console.log(req.user._id);
-      console.log(isUserBug);
-      res.render('bugDetails', { bug: bugFromDB, currentUser: req.user, isUserBug: isUserBug });
+      let isUserBug = '' + bugFromDB.userId == '' + req.user._id;
+      User.findById(bugFromDB.userId).then(bugOwner => {
+        console.log({bugOwner});
+        console.log({bugFromDB});
+        res.render('bugDetails', { bug: bugFromDB, currentUser: req.user, isUserBug: isUserBug, bugOwner: bugOwner });
+      })
     })
     .catch(error => {
         console.log(error);
@@ -95,6 +97,7 @@ router.get('/bugs/:id', (req, res) => {
     const imgName = req.file.originalname;
     const imgPath = req.file.url;
     const imgPublicId = req.file.public_id;
+    let status = req.body.bugStatus
     const {description} = req.body;
     const id = req.params.id;
     Bug.findByIdAndUpdate(id, {
@@ -102,6 +105,7 @@ router.get('/bugs/:id', (req, res) => {
       imgName,
       imgPath,
       imgPublicId,
+      status,
     })
     .then(bug => {
       res.redirect(`/bugs/${bug._id}`)

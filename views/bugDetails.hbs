@@ -1,20 +1,19 @@
-{{#with bug}}
-<h1>{{title}}</h1>
-<span>Desription: {{description}}</span>
-<img src="{{imgPath}}" alt="{{imgName}}"> 
 
-<p>Creation date: {{createdAt}}</p>
-<p>Bug Number: {{bugnumber}} </p>
-<p>Status: </p>
-<p>Bootcamp: </p>
+<h1>{{bug.title}}</h1>
+<img height="200" width="200" src="{{bug.imgPath}}" alt="{{bug.imgName}}"> 
+<br>
+<span>Desription: {{bug.description}}</span>
+
+<p>Creation date: {{bug.createdAt}}</p>
+<p>Bug Number: {{bug.bugnumber}} </p>
+<p>Status: {{bug.status}} </p>
+<p>Bootcamp: {{bugOwner.bootcamp}} - {{bugOwner.timeType}} </p>
 {{#if anonym}}
   <p>Author: Crazy Bugger </p>
 {{else}}
-  <p>Author: {{ currentUser.name }} </p>
+  <p>Author: {{ bugOwner.name }} </p>
 {{/if}}
 
-
-{{/with}}
 
 {{#if isUserBug}}
   <a href="/bugs/edit/{{bug._id}}">Edit this Bug</a>

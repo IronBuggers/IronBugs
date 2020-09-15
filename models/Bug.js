@@ -23,10 +23,15 @@ const bugSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  
   bugnumber: Number,
-  status: String,
+  
+  status: {
+    type: String,
+    default: 'Active',
+  }
 
-} ,
+},
 {
   timestamps: true
 });
