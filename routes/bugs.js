@@ -64,7 +64,11 @@ router.get('/bugs/add', (req, res) => {
 router.get('/bugs/:id', (req, res) => {
     const id = req.params.id
     Bug.findById(id).then(bugFromDB => {
-      res.render('bugDetails', { bug: bugFromDB, currentUser: req.user });
+      let isUserBug = '' + bugFromDB.userId == '' + req.user._id
+      console.log(bugFromDB.userId);
+      console.log(req.user._id);
+      console.log(isUserBug);
+      res.render('bugDetails', { bug: bugFromDB, currentUser: req.user, isUserBug: isUserBug });
     })
     .catch(error => {
         console.log(error);

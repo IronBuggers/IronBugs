@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../models/User");
+const Bug = require("../models/Bug")
 const router = express.Router();
 const { uploader, cloudinary } = require("../config/cloudinary.js");
 
@@ -44,8 +45,20 @@ router.get("/firstSignin", (req, res, next) => {
 	res.render("firstSignin");
 });
 
-router.get("/userProfile", (req, res, next) => {
-	res.render("userProfile", { currentUser: req.user})
+router.get("/userProfile", async (req, res, next) => {
+	let bugMap = {};
+	let userBugs = await Bug.find({userId: req.user._id}, function(error, bugs) {
+
+		bugs.forEach(function(bug) {
+			bugMap[bug._id] = bug
+		});
+		return bugMap;
+	})
+	console.log(userBugs);
+	// 	userId: req.user._id
+	// })
+	console.log(bugMap);
+	res.render("userProfile", { currentUser: req.user, bugMap})
 })
 
 

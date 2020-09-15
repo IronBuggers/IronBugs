@@ -13,11 +13,14 @@
   <p>Author: {{ currentUser.name }} </p>
 {{/if}}
 
+
 {{/with}}
 
+{{#if isUserBug}}
+  <a href="/bugs/edit/{{bug._id}}">Edit this Bug</a>
 
-<a href="/bugs/edit/{{bug._id}}">Edit this Bug</a>
+  <a href="/bugs/delete/{{bug._id}}">Delete this Bug</a>
+{{/if}}
 
-<a href="/bugs/delete/{{bug._id}}">Delete this Bug</a>
 
 <button><a href="/bugArea">Back to All Bugs</a></button>

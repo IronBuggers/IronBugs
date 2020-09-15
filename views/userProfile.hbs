@@ -3,13 +3,13 @@
 <p> Show user information here</p>
 <img src="{{currentUser.imgPath}}" alt="{{currentUser.imgName}}"> 
 
-{{!-- <p>My Reported Bugs</p> 
-  {{#each bugsList}}
+<p>My Reported Bugs</p> 
+  {{#each bugMap}}
 <p>
   <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
 </p>
-{{/each}} --}}
+{{/each}}
 
-<p>show all the reported bugs by the user... if the User does not have any bugs show "You still don't have any Bugs reported 😢 Wanna report one now? - </p>
+<p>Show all the reported bugs by the user... if the User does not have any bugs show "You still don't have any Bugs reported 😢 Wanna report one now? - </p>
 <button><a href="/addBug"> Report a Bug</a></button>
 <button><a href="/bugArea">See all the Bugs</a></button></p>
