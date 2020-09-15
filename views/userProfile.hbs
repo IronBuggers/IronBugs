@@ -1,7 +1,13 @@
 <h1>Hello {{currentUser.name}}</h1>
 
 <p> Show user information here</p>
-<img src="{{currentUser.imgPath}}" alt="{{currentUser.imgName}}"> 
+{{#with currentUser}}
+<h1>{{name}}</h1>
+<img height="200" width="400" src="{{imgPath}}" alt="{{imgName}}"> 
+<p>Bootcamp: {{bootcamp}} - {{timeType}}</p>
+<p>Location: {{location}}</p>
+{{/with}}
+
 
 <p>My Reported Bugs</p> 
   {{#each bugMap}}
@@ -13,3 +19,4 @@
 <p>Show all the reported bugs by the user... if the User does not have any bugs show "You still don't have any Bugs reported 😢 Wanna report one now? - </p>
 <button><a href="/addBug"> Report a Bug</a></button>
 <button><a href="/bugArea">See all the Bugs</a></button></p>
+<button type="submit"><a href="/logout">Log Out</a></button>

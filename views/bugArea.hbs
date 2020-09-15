@@ -50,22 +50,34 @@
 </form>
 
   {{else}}
-  <h1>Hello {{ currentUser.name }}</h1>
-  <br>
+<nav class="navbar navbar-dark bg-primary">
+  <h1>Welcome {{ currentUser.name }}</h1>
+  <button type="submit"><a href="/addBug"> REPORT A BUG</a></button>
+  <button type="button"><a href="/userProfile"> Go to my profile</a></button>
+  <button type="submit"><a href="/logout">Log Out</a></button>
+</nav>
+  
+  
+  
   Show Bugs
+  <div class="row">
   {{#each bugsList}}
 
+
+<div class="card col-md-3" style="width: 18rem;">
+  <img width="300" height="300" src="{{imgPath}}" class="card-img-top" alt="{{imgName}}">
+  <div class="card-body">
+    <h5 class="card-title">{{ title }}</h5>
+    <p class="card-text">{{ description }}</p>
+    <a href="/bugs/{{ _id }}" class="btn btn-primary">See Details</a>
+  </div>
+</div>
+{{!-- 
 <p>
   <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
-</p>
+</p> --}}
 {{/each}}
-  <br>
-
-<button type="submit"><a href="/addBug"> REPORT A BUG</a></button>
-<br>
-<button type="button"><a href="/userProfile"> Go to my profile</a></button>
-<br>
-<button type="submit"><a href="/logout">Log Out</a></button>
+</div>
 
 {{/if}}
 
