@@ -29,7 +29,11 @@ const bugSchema = new Schema({
   status: {
     type: String,
     default: 'Active',
-  }
+  },
+  votes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }]
 
 },
 {

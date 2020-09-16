@@ -4,6 +4,7 @@ const Bug = require('../models/Bug');
 const middleware = require('./middlewares');
 const { uploader, cloudinary } = require("../config/cloudinary.js");
 const User = require('../models/User')
+let voteNumber = 0
 
 
 router.get("/addBug", (req, res, next) => {
@@ -15,6 +16,7 @@ router.post('/bugs', uploader.single('bugImg'), async (req, res) => {
   const imgPath = req.file.url;
   const imgPublicId = req.file.public_id;
   let anonym = req.body.anonym
+  // console.log(req.body.anonym);
   if (anonym === 'on') {
     anonym = true
   } else {
@@ -45,11 +47,23 @@ router.post('/bugs', uploader.single('bugImg'), async (req, res) => {
 });
 
 router.get('/bugArea', middleware.loginCheck(), (req, res, next) => {
-    
+    let array = []
+
   Bug.find().then(bugsFromDB => {
-    console.log('This is bugs',bugsFromDB);
-    console.log(req.session.user);
-    res.render('bugArea', { bugsList: bugsFromDB, currentUser: req.user})
+        
+    // const bugs = bugsFromDB.map(bugFromDB => { 
+    //   return {title: bugFromDB.title, description: bugFromDB.description, imgPath: bugFromDB.imgPath, _id: bugFromDB._id, numberOfVotes: bugFromDB.votes.length}
+    // })
+    const bugs = bugsFromDB.map(bugFromDB => {
+      let hasVoted = req.user.votes.includes(bugFromDB._id)
+      console.log(req.user.votes.includes(bugFromDB._id), bugFromDB._id, req.user._id)
+      return {title: bugFromDB.title, description: bugFromDB.description, imgPath: bugFromDB.imgPath, _id: bugFromDB._id, numberOfVotes: bugFromDB.votes.length, hasVoted: hasVoted}
+    })
+    
+    // console.log({array});
+    // console.log('This is bugs',bugsFromDB);
+    // console.log(req.session.user);
+    res.render('bugArea', { bugsList: bugs, currentUser: req.user, lengthVotes: array})
 
   })
   
@@ -77,7 +91,28 @@ router.get('/bugs/:id', (req, res) => {
     })
   });
 
+router.get('/postVotes/:id', (req, res) => {
+  console.log("I am voting")
+  const id = req.params.id
+  // if (voteNumber < 1) {
+    Bug.findByIdAndUpdate(id,
+      {$push: {votes: req.user._id}}
+      ).then(bugFromDB => {
+      User.findByIdAndUpdate(req.user._id, {$push: {votes: bugFromDB._id}}).then(user => {
+        console.log("this is bugFromDB", bugFromDB)
+        res.redirect('/bugArea')
 
+      })
+      
+    })
+    .catch(error => {
+        console.log(error);
+    }) 
+  // } else {
+  //   res.redirect('/bugArea')
+  // } voteNumber = 1
+  
+})
 
   router.get('/bugs/edit/:id', (req, res) => {
     const id = req.params.id;
