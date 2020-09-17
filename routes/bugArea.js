@@ -15,14 +15,18 @@ router.post("/bugArea/form/:userId", uploader.single("image"), (req, res, next) 
 	const userId = req.params.userId;
 	const { name, bootcamp, type, location } = req.body;
 
-	const imgName = req.file.originalname;
-	const imgPath = req.file.url;
-	const imgPublicId = req.file.public_id;
-
-	console.log(name);
-	console.log(bootcamp);
-	console.log(type);
-	console.log(location);
+	let imgName;
+	let imgPath;
+	let imgPublicId;
+	if (req.file !== undefined) {
+		imgName = req.file.originalname;
+		imgPath = req.file.url;
+		imgPublicId = req.file.public_id;
+	} else {
+		imgName = "Default Image";
+		imgPath = "";
+		imgPublicId = "";
+	}
 
 	User.findByIdAndUpdate(userId, {
 		name,
@@ -37,7 +41,6 @@ router.post("/bugArea/form/:userId", uploader.single("image"), (req, res, next) 
 		.then((found) => res.redirect("bugArea"))
 		.catch((error) => console.log(error));
 
-	console.log(userId);
 	res.redirect("/bugArea");
 });
 
@@ -53,10 +56,8 @@ router.get("/userProfile", async (req, res, next) => {
 		});
 		return bugMap;
 	});
-	console.log(userBugs);
 	// 	userId: req.user._id
 	// })
-	console.log(bugMap);
 	res.render("userProfile", { currentUser: req.user, bugMap });
 });
 

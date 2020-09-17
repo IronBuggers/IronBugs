@@ -11,9 +11,7 @@ const path = require("path");
 
 mongoose
 	.connect("mongodb://localhost/ironbugs", { useNewUrlParser: true, useUnifiedTopology: true })
-	.then((x) => {
-		console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`);
-	})
+	.then((x) => {})
 	.catch((err) => {
 		console.error("Error connecting to mongo", err);
 	});
@@ -99,7 +97,6 @@ passport.use(
 		},
 		(accessToken, refreshToken, profile, done) => {
 			// find a user with profile.id as githubId or create one
-			console.log(profile);
 			User.findOne({ githubId: profile.id })
 				.then((found) => {
 					if (found !== null) {
@@ -133,7 +130,6 @@ passport.use(
 		function (accessToken, refreshToken, profile, done) {
 			User.findOne({ googleId: profile.id })
 				.then((found) => {
-					console.log(profile);
 					if (found !== null) {
 						done(null, found);
 					} else {
