@@ -1,0 +1,27 @@
+<h1>Solved Bugs</h1>
+
+<div class="row">
+  {{#each solvedBugs}}
+
+
+  <div class="card col-md-3" style="width: 18rem;">
+    <img width="300" height="300" src="{{imgPath}}" class="card-img-top" alt="{{imgName}}">
+    <div class="card-body">
+      <h5 class="card-title">{{ title }}</h5>
+      <p class="card-text">{{ description }}</p>
+      <a href="/bugs/{{ _id }}" class="btn btn-primary">See Details</a>
+      <br>
+      {{#if hasVoted}}
+      <span id="voteNumber">Votes: {{numberOfVotes}}</span>
+      {{else}}
+        <a href="/postVotes/{{ _id }}">👍 vote<span id="voteNumber">{{numberOfVotes}}</span></a>
+      {{/if}}
+
+    </div>
+  </div>
+  {{!--
+<p>
+  <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
+</p> --}}
+  {{/each}}
+</div>

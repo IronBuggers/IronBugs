@@ -36,7 +36,7 @@
   </div>
   <div class="form-group">
     <label for="exampleFormControlSelect1">Location</label>
-    <select class="form-control" id="exampleFormControlSelect1" name="location">
+    <select class="form-control" id="exampleFormControlSelect1" onchange="locationChanged()" name="location">
       <option>Berlin</option>
       <option>Amsterdam</option>
       <option>Madrid</option>
@@ -63,6 +63,7 @@
 </nav>
 
 <label for="chooseBootcamp">Bootcamp: </label>
+<form action="/filterByLocation" method="post">
 <select class="" id="chooseBootcamp" name="chooseBootcamp">
   <option>Berlin</option>
   <option>Amsterdam</option>
@@ -74,8 +75,10 @@
   <option>Mexico City</option>
   <option>Paris</option>
 </select>
+<button type="submit" class="btn btn-success">Submit</button>
+</form>
 
-Show Bugs
+<a href="/bugArea" class="btn btn-primary">Show All Bugs</a>
 <div class="row">
   {{#each bugsList}}
 
@@ -88,14 +91,14 @@ Show Bugs
       <a href="/bugs/{{ _id }}" class="btn btn-primary">See Details</a>
       <br>
       {{#if hasVoted}}
-      <span id="voteNumber">Votes: {{numberOfVotes}}</span>
+      <span id="voteNumber">👍 {{numberOfVotes}}</span>
       {{else}}
-        <a href="/postVotes/{{ _id }}">👍 vote<span id="voteNumber">{{numberOfVotes}}</span></a>
+        <a class="mt-5" href="/postVotes/{{ _id }}">👍 <span id="voteNumber">{{numberOfVotes}}</span></a>
       {{/if}}
-      
+
     </div>
   </div>
-  {{!-- 
+  {{!--
 <p>
   <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
 </p> --}}
