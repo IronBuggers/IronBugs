@@ -57,9 +57,9 @@
 {{else}}
 <nav class="navbar navbar-dark bg-primary">
   <h1>Welcome {{ currentUser.name }}</h1>
-  <button type="submit"><a href="/addBug"> REPORT A BUG</a></button>
-  <button type="button"><a href="/userProfile"> Go to my profile</a></button>
-  <button type="submit"><a href="/logout">Log Out</a></button>
+  <a href="/addBug" class="btn btn-success"> REPORT A BUG</a>
+  <a href="/userProfile" class="btn btn-outline-warning"> Go to my profile</a>
+  <a href="/logout" class="btn btn-danger">Log Out</a>
 </nav>
 
 <label for="chooseBootcamp">Bootcamp: </label>
@@ -91,9 +91,10 @@
       <a href="/bugs/{{ _id }}" class="btn btn-primary">See Details</a>
       <br>
       {{#if hasVoted}}
-      <span id="voteNumber">👍 {{numberOfVotes}}</span>
+      <span id="voteNumber">🐞 Votes: {{numberOfVotes}}</span>
       {{else}}
         <a class="mt-5" href="/postVotes/{{ _id }}">👍 <span id="voteNumber">{{numberOfVotes}}</span></a>
+        <a href="/postVotes/{{ _id }}">🔺 Votes: <span id="voteNumber">{{numberOfVotes}}</span></a>
       {{/if}}
 
     </div>

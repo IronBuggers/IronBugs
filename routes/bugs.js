@@ -217,6 +217,17 @@ router.post("/bugs/edit/:id", uploader.single("bugEditImg"), (req, res) => {
 		});
 });
 
+router.get("/bugs/delete/:id", (req, res) => {
+	const id = req.params.id;
+	Bug.findByIdAndDelete(id)
+		.then(() => {
+			res.redirect("/bugArea");
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+});
+
 router.get("/bugArea/solved", (req, res) => {
 	Bug.find({ status: "Solved" }).then((solvedBugs) => {
 		res.render("solvedBugs", { solvedBugs });
