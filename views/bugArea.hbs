@@ -62,9 +62,12 @@
   <a href="/logout" class="btn btn-danger">Log Out</a>
 </nav>
 
-<label for="chooseBootcamp">Bootcamp: </label>
+<div class="container">
+
 <form action="/filterByLocation" method="post">
-<select class="" id="chooseBootcamp" name="chooseBootcamp">
+<div class="row mt-3 mb-3 ">
+<label for="chooseBootcamp" class="mt-2">Bootcamp: </label>
+<select class="ml-2" id="chooseBootcamp" name="chooseBootcamp">
   <option>Berlin</option>
   <option>Amsterdam</option>
   <option>Madrid</option>
@@ -75,20 +78,24 @@
   <option>Mexico City</option>
   <option>Paris</option>
 </select>
-<button type="submit" class="btn btn-success">Submit</button>
-</form>
+<button type="submit" class="btn btn-success ml-2">Submit</button>
+<a href="/bugArea" class="btn btn-primary ml-2">Show All Bugs</a>
+</div>
 
-<a href="/bugArea" class="btn btn-primary">Show All Bugs</a>
+</form>
+</div>
+
+<div class="container">
 <div class="row">
   {{#each bugsList}}
 
 
-  <div class="card col-md-3" style="width: 18rem;">
+  <div class="card col-md-4 mb-1" style="width: 18rem;">
     <img width="300" height="300" src="{{imgPath}}" class="card-img-top" alt="{{imgName}}">
     <div class="card-body">
       <h5 class="card-title">{{ title }}</h5>
       <p class="card-text">{{ description }} <br> {{ location }}</p>
-      
+
       <a href="/bugs/{{ _id }}" class="btn btn-primary">See Details</a>
       <br>
       {{#if hasVoted}}
@@ -99,11 +106,14 @@
 
     </div>
   </div>
+
   {{!--
 <p>
   <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
 </p> --}}
   {{/each}}
 </div>
+</div>
+
 
 {{/if}}

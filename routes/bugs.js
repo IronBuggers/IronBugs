@@ -27,7 +27,7 @@ router.post("/filterByLocation", (req, res) => {
 					imgPath: bugFromDB.imgPath,
 					_id: bugFromDB._id,
 					numberOfVotes: bugFromDB.votes.length,
-          hasVoted: hasVoted,
+					hasVoted: hasVoted,
 				};
 			});
 
@@ -51,9 +51,10 @@ router.post("/bugs", uploader.single("bugImg"), async (req, res) => {
 		imgPath = req.file.url;
 		imgPublicId = req.file.public_id;
 	} else {
-		imgName = "Default Image";
-		imgPath = "";
-		imgPublicId = "";
+		imgName = "Logo_c7nyqp";
+		imgPath =
+			"https://res.cloudinary.com/dwody49vn/image/upload/v1600358078/user-images/Logo_c7nyqp.png";
+		imgPublicId = "user-images/Logo_c7nyqp";
 	}
 
 	let anonym = req.body.anonym;
@@ -105,7 +106,7 @@ router.get("/bugArea", middleware.loginCheck(), (req, res, next) => {
 					imgPath: bugFromDB.imgPath,
 					_id: bugFromDB._id,
 					numberOfVotes: bugFromDB.votes.length,
-          hasVoted: hasVoted,
+					hasVoted: hasVoted,
 				};
 			});
 

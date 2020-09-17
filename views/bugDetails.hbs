@@ -1,20 +1,18 @@
+<div class="row mt-5">
+<div class=" col-md-3 mx-auto mt-5" style="width: 20rem;">
+    <h5 class="card-title">{{ bug.title }}</h5>
+    <div class="card-body">
+      <img width="300" height="300" src="{{bug.imgPath}}" class="card-img-top" alt="{{bug.imgName}}">
 
-<h1>{{bug.title}}</h1>
-<img height="200" width="200" src="{{bug.imgPath}}" alt="{{bug.imgName}}"> 
-<br>
-<span>Desription: {{bug.description}}</span>
+      <p class="card-text">Description: {{ bug.description }} <br> {{ bug.location }}</p>
+      <p class="card-text">Status: {{ bug.status }}</p>
+      <p class="card-text">Bootcamp: {{bugOwner.location}} - {{ bugOwner.timeType }}</p>
 
-<p>Creation date: {{bug.createdAt}}</p>
-<p>Bug Number: {{bug.bugnumber}} </p>
-<p>Status: {{bug.status}} </p>
-<p>Bootcamp: {{bugOwner.bootcamp}} - {{bugOwner.timeType}} </p>
-<p>Location: {{bug.location}} </p>
-{{#if bug.anonym}}
+      {{#if bug.anonym}}
   <p>Author: Crazy Bugger </p>
 {{else}}
-  <p>Author: {{ bugOwner.name }} </p>
-{{/if}}
-
+      <p>Author: {{ bugOwner.name }} </p>
+      {{/if}}
 
 {{#if isUserBug}}
   <a href="/bugs/edit/{{bug._id}}" class="btn btn-outline-warning">Edit this Bug</a>
@@ -24,3 +22,8 @@
 
 
 <a href="/bugArea" class="btn btn-success">Back to All Bugs</a>
+
+    </div>
+  </div>
+</div>
+
