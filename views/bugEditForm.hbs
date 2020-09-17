@@ -1,19 +1,29 @@
 {{#with bug}}
 <form action="/bugs/edit/{{_id}}" method="POST" enctype="multipart/form-data">
 
+  {{!-- <div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Description:</span>
+  </div>
+  <textarea class="form-control" value="{{description}}" aria-label="With textarea" name="description" id="description"></textarea>
+</div> --}}
+  
   <label for="description">Description:</label>
   <input type="text" name="description" id="description" value="{{description}}">
 
   <input type="file" name="bugEditImg" id="bugEditImg">
 
+  
+
+  
   <label for="bugStatus">Status: </label>
   <select class="" id="bugStatus" name="bugStatus">
     <option>Active</option>
     <option>Solved</option>
   </select>
 
-  <button type="submit">Edit this Bug</button>
-  <button type="submit"><a href="/bugArea">Cancel</a></button>
+  <button type="submit" class="btn btn-primary">Edit this Bug</button>
+  <a href="/bugArea" class="btn btn-danger">Cancel</a>
 
 </form>
 {{/with}}
