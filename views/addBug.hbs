@@ -2,25 +2,41 @@
 
 <form action="/bugs" method="POST" enctype="multipart/form-data">
  
-  <label for="title">Title:</label>
-  <input type="text" name="title" id="title">
+<div class="input-group flex-nowrap">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="addon-wrapping">Title:</span>
+  </div>
+  <input type="text" name="title" id="title" class="form-control" placeholder="Please included title of the Bug" aria-label="Username" aria-describedby="addon-wrapping">
+</div>
 
-  <label for="description">Description:</label>
-  <input type="text" name="description" id="description">
+
+  {{!-- <label for="title">Title:</label>
+  <input type="text" name="title" id="title"> --}}
+
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Description:</span>
+  </div>
+  <textarea class="form-control" aria-label="With textarea" name="description" id="description" placeholder="Please write description for your Bug"></textarea>
+</div>
+
+
+  {{!-- <label for="description">Description:</label>
+  <input type="text" name="description" id="description"> --}}
 
   <label for="bugImg">Add a bug photo: </label>
   <input type="file" name="bugImg" id="bugImg">
 
   <p> <span> Do you want to report your bug <b>Anonymously</b>?</span> </p>
-  <input name="anonym" id="cb" type="checkbox" style="float: left; margin-top: 5px;>">
+  <input name="anonym" id="cb" type="checkbox" aria-label="Checkbox for following text input" style="float: left; margin-top: 5px;>">
   <div style="margin-left: 25px;">
     Anonymously
   </div>  
 
 
 
-  <button type="submit">Publish</button>
+  <button type="submit" class="btn btn-primary">Publish</button>
+  <a href="/bugArea" class="btn btn-danger"> Discard</a>
   
 
 </form>
-<button type="submit"><a href="/bugArea"> Discard</a></button>

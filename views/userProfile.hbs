@@ -12,11 +12,11 @@
 <p>My Reported Bugs</p> 
   {{#each bugMap}}
 <p>
-  <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
+  <a href="/bugs/{{ _id }}" class="btn btn-info">{{ title }}</a>
 </p>
 {{/each}}
 
 <p>Show all the reported bugs by the user... if the User does not have any bugs show "You still don't have any Bugs reported 😢 Wanna report one now? - </p>
-<button><a href="/addBug"> Report a Bug</a></button>
-<button><a href="/bugArea">See all the Bugs</a></button></p>
-<button type="submit"><a href="/logout">Log Out</a></button>
+<a href="/addBug" class="btn btn-success"> Report a Bug</a>
+<a href="/bugArea" class="btn btn-primary">See all the Bugs</a></p>
+<a href="/logout" class="btn btn-danger">Log Out</a>

@@ -167,20 +167,15 @@ router.get("/bugs/edit/:id", (req, res) => {
     })
   })
 
-router.post("/bugs/edit/:id", (req, res) => {
-	const { title, description, image } = req.body;
-	const id = req.params.id; // req.user._id for you marlena
-	Bug.findByIdAndUpdate(id, {
-		title: title,
-		description: description,
-		image: image,
-	})
-		.then((bug) => {
-			res.redirect(`/bugs/${bug._id}`);
-		})
-		.catch((error) => {
-			console.log(error);
-		});
-});
+  router.get('/bugs/delete/:id', (req, res) => {
+    const id = req.params.id
+    Bug.findByIdAndDelete(id)
+    .then(() => {
+      res.redirect('/bugArea');
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  })
 
 module.exports = router;
