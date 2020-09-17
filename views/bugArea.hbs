@@ -87,13 +87,13 @@
     <img width="300" height="300" src="{{imgPath}}" class="card-img-top" alt="{{imgName}}">
     <div class="card-body">
       <h5 class="card-title">{{ title }}</h5>
-      <p class="card-text">{{ description }}</p>
+      <p class="card-text">{{ description }} <br> {{ location }}</p>
+      
       <a href="/bugs/{{ _id }}" class="btn btn-primary">See Details</a>
       <br>
       {{#if hasVoted}}
       <span id="voteNumber">🐞 Votes: {{numberOfVotes}}</span>
       {{else}}
-        <a class="mt-5" href="/postVotes/{{ _id }}">👍 <span id="voteNumber">{{numberOfVotes}}</span></a>
         <a href="/postVotes/{{ _id }}">🔺 Votes: <span id="voteNumber">{{numberOfVotes}}</span></a>
       {{/if}}
 

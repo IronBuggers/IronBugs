@@ -27,7 +27,7 @@ router.post("/filterByLocation", (req, res) => {
 					imgPath: bugFromDB.imgPath,
 					_id: bugFromDB._id,
 					numberOfVotes: bugFromDB.votes.length,
-					hasVoted: hasVoted,
+          hasVoted: hasVoted,
 				};
 			});
 
@@ -105,7 +105,7 @@ router.get("/bugArea", middleware.loginCheck(), (req, res, next) => {
 					imgPath: bugFromDB.imgPath,
 					_id: bugFromDB._id,
 					numberOfVotes: bugFromDB.votes.length,
-					hasVoted: hasVoted,
+          hasVoted: hasVoted,
 				};
 			});
 
