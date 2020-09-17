@@ -10,7 +10,7 @@ const logger = require("morgan");
 const path = require("path");
 
 mongoose
-	.connect("mongodb://localhost/ironbugs", { useNewUrlParser: true, useUnifiedTopology: true })
+	.connect(process.env.MONGO_URI || "mongodb://localhost/ironbugs", { useNewUrlParser: true, useUnifiedTopology: true })
 	.then((x) => {})
 	.catch((err) => {
 		console.error("Error connecting to mongo", err);
