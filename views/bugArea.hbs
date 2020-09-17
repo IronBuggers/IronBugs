@@ -1,19 +1,22 @@
-
 {{#if currentUser.firstSignin}}
-<h3 class="text-center"><span class="text-primary">Welcome to IronBugs!</span> <br> In order to finalize your Profile, please fill up the <strong>form</strong></h3>
+<h3 class="text-center"><span class="text-primary">Welcome to IronBugs!</span> <br> In order to finalize your Profile,
+  please fill up the <strong>form</strong></h3>
 
-  <form action="/bugArea/form/{{currentUser._id}}" method="POST" enctype="multipart/form-data">
+<form action="/bugArea/form/{{currentUser._id}}" method="POST" enctype="multipart/form-data">
 
-<div class="input-group">
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" name="image" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-    <label class="custom-file-label" for="inputGroupFile04">Choose an Profile Image</label>
+  <div class="input-group">
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" name="image" id="inputGroupFile04"
+        aria-describedby="inputGroupFileAddon04">
+      <label class="custom-file-label" for="inputGroupFile04">Choose an Profile Image</label>
+    </div>
+
   </div>
 
-</div>
   <div class="form-group">
     <label for="exampleFormControlInput1">Name</label>
-    <input type="text" class="form-control" id="exampleFormControlInput1" name='name' placeholder="Max Mustermann" value="{{currentUser.name}}" required>
+    <input type="text" class="form-control" id="exampleFormControlInput1" name='name' placeholder="Max Mustermann"
+      value="{{currentUser.name}}" required>
   </div>
 
   <div class="form-group">
@@ -49,37 +52,54 @@
   <button class="btn btn-success btn-large" type="submit">Submit the Form</button>
 </form>
 
-  {{else}}
+
+
+{{else}}
 <nav class="navbar navbar-dark bg-primary">
   <h1>Welcome {{ currentUser.name }}</h1>
   <button type="submit"><a href="/addBug"> REPORT A BUG</a></button>
   <button type="button"><a href="/userProfile"> Go to my profile</a></button>
   <button type="submit"><a href="/logout">Log Out</a></button>
 </nav>
-  
-  
-  
-  Show Bugs
-  <div class="row">
+
+<label for="chooseBootcamp">Bootcamp: </label>
+<select class="" id="chooseBootcamp" name="chooseBootcamp">
+  <option>Berlin</option>
+  <option>Amsterdam</option>
+  <option>Madrid</option>
+  <option>Miami</option>
+  <option>Sao Paulo</option>
+  <option>Barcelona</option>
+  <option>Lissabon</option>
+  <option>Mexico City</option>
+  <option>Paris</option>
+</select>
+
+Show Bugs
+<div class="row">
   {{#each bugsList}}
 
 
-<div class="card col-md-3" style="width: 18rem;">
-  <img width="300" height="300" src="{{imgPath}}" class="card-img-top" alt="{{imgName}}">
-  <div class="card-body">
-    <h5 class="card-title">{{ title }}</h5>
-    <p class="card-text">{{ description }}</p>
-    <a href="/bugs/{{ _id }}" class="btn btn-primary">See Details</a>
+  <div class="card col-md-3" style="width: 18rem;">
+    <img width="300" height="300" src="{{imgPath}}" class="card-img-top" alt="{{imgName}}">
+    <div class="card-body">
+      <h5 class="card-title">{{ title }}</h5>
+      <p class="card-text">{{ description }}</p>
+      <a href="/bugs/{{ _id }}" class="btn btn-primary">See Details</a>
+      <br>
+      {{#if hasVoted}}
+      <span id="voteNumber">Votes: {{numberOfVotes}}</span>
+      {{else}}
+        <a href="/postVotes/{{ _id }}">👍 vote<span id="voteNumber">{{numberOfVotes}}</span></a>
+      {{/if}}
+      
+    </div>
   </div>
-</div>
-{{!-- 
+  {{!-- 
 <p>
   <a href="/bugs/{{ _id }}">{{ title }} {{ description }}</a>
 </p> --}}
-{{/each}}
+  {{/each}}
 </div>
 
 {{/if}}
-
-
-
