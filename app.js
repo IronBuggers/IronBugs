@@ -93,7 +93,7 @@ passport.use(
 		{
 			clientID: process.env.GITHUB_ID,
 			clientSecret: process.env.GITHUB_SECRET,
-			callbackURL: "http://127.0.0.1:3000/auth/github/callback",
+			callbackURL: "https://ironbugs.herokuapp.com/auth/github/callback",
 		},
 		(accessToken, refreshToken, profile, done) => {
 			// find a user with profile.id as githubId or create one
