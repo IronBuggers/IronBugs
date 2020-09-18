@@ -1,22 +1,74 @@
-<h1>Hello {{currentUser.name}}</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand font-weight-bold" href="/bugArea">IronLibrary</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<p> Show user information here</p>
-{{#with currentUser}}
-<h1>{{name}}</h1>
-<img height="200" width="400" src="{{imgPath}}" alt="{{imgName}}"> 
-<p>Bootcamp: {{bootcamp}} - {{timeType}}</p>
-<p>Location: {{location}}</p>
-{{/with}}
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <a href="/addBug" class="btn btn-success mr-5">+ REPORT A BUG</a>
+      <li class="nav-item">
+        <a class="nav-link" href="/bugArea">BugArea</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ currentUser.name }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item active" href="/userProfile">Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/logout">Logout</a>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</nav>
 
 
-<p>My Reported Bugs</p> 
-  {{#each bugMap}}
-<p>
-  <a href="/bugs/{{ _id }}" class="btn btn-info">{{ title }}</a>
-</p>
+<div class="container">
+	<div class="row mt-5">
+		<div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+    	 <div class="well profile">
+            <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-8">
+                    <h2 class="ml-2 mb-5">Hello <span class="text-primary">{{currentUser.name}}</span></h2>
+                    <img height="400" width="400" src="{{currentUser.imgPath}}" alt="{{currentUser.imgName}}">
+                    <p class=""><strong class="text-primary ml-2 text-nowrap">Bootcamp:</strong> {{currentUser.bootcamp}}-{{currentUser.timeType}}</p>
+                    <p class=""><strong class="text-primary ml-2">Location: </strong> {{currentUser.location}} </p>
+                </div>
+            </div>
+    	 </div>
+		</div>
+
+    <div class="col-lg-6">
+
+         <h3 class="text-primary mb-5">Reported Bugs</h3>
+           {{#each bugMap}}
+
+         <div class="list-group">
+            <a  href="/bugs/{{ _id }}" class="list-group-item list-group-item-action list-group-item-success w-75">{{ title }}</a>
+
+          </div>
 {{/each}}
 
-<p>Show all the reported bugs by the user... if the User does not have any bugs show "You still don't have any Bugs reported 😢 Wanna report one now? - </p>
-<a href="/addBug" class="btn btn-success"> Report a Bug</a>
-<a href="/bugArea" class="btn btn-primary">See all the Bugs</a></p>
-<a href="/logout" class="btn btn-danger">Log Out</a>
+
+    </div>
+
+
+	</div>
+<div class="row">
+  <div class="col-12 text-center mt-5">
+  <p class="h4 mb-3">"You still don't have many Bugs reported 😢 Wanna report one now? - </p>
+  <a href="/bugArea" class="btn btn-primary">See all the Bugs</a>
+  <a href="/addBug" class="btn btn-success mr-5">+ REPORT A BUG</a>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
