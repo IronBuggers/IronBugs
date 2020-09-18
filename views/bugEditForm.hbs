@@ -1,5 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand font-weight-bold" href="/bugArea">IronLibrary</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <a href="/addBug" class="btn btn-success mr-5">+ REPORT A BUG</a>
+      <li class="nav-item active">
+        <a class="nav-link" href="/bugArea">BugArea <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ currentUser.name }} Profile
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/userProfile">Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/logout">Logout</a>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+
 {{#with bug}}
-<form action="/bugs/edit/{{_id}}" method="POST" enctype="multipart/form-data">
+<form action="/bugs/edit/{{_id}}" method="POST" enctype="multipart/form-data" class="mt-5">
 
   {{!-- <div class="input-group">
   <div class="input-group-prepend">
@@ -7,23 +35,32 @@
   </div>
   <textarea class="form-control" value="{{description}}" aria-label="With textarea" name="description" id="description"></textarea>
 </div> --}}
-  
-  <label for="description">Description:</label>
-  <input type="text" name="description" id="description" value="{{description}}">
+<div class="container">
+<div class="form-group">
+  <label for="description" class="text-primary font-weigt-bold">Description:</label>
+  <input type="text" name="description" id="description" class="form-control" value="{{description}}">
+</div>
+<div class="input-group mb-3">
 
-  <input type="file" name="bugEditImg" id="bugEditImg">
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="bugEditImg" name="bugEditImg">
+    <label class="custom-file-label" for="bugEditImg">Choose Bug Image</label>
+  </div>
+</div>
 
-  
 
-  
-  <label for="bugStatus">Status: </label>
-  <select class="" id="bugStatus" name="bugStatus">
+
+  <div class="form-group mt-4">
+  <label for="bugStatus"><span class="text-primary font-weigt-bold">Status:</span> </label>
+
+  <select class="" id="bugStatus" name="bugStatus" class="form-control">
     <option>Active</option>
     <option>Solved</option>
   </select>
+  </div>
 
   <button type="submit" class="btn btn-primary">Edit this Bug</button>
   <a href="/bugArea" class="btn btn-danger">Cancel</a>
-
+</div>
 </form>
 {{/with}}
