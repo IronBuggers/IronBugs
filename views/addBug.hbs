@@ -1,10 +1,38 @@
-<h1>Report a bug</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand font-weight-bold" href="/bugArea">IronLibrary</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <a href="/addBug" class="btn btn-success mr-5">+ REPORT A BUG</a>
+      <li class="nav-item">
+        <a class="nav-link" href="/bugArea">BugArea</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ currentUser.name }} Profile
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/userProfile">Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/logout">Logout</a>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<div class="container mt-5">
+<h1 class="text-primary mb-5">Report a bug</h1>
 
 <form action="/bugs" method="POST" enctype="multipart/form-data">
- 
+
 <div class="input-group flex-nowrap">
   <div class="input-group-prepend">
-    <span class="input-group-text" id="addon-wrapping">Title:</span>
+    <span class="input-group-text" id="addon-wrapping">Title: &#8195;&#8195;&#8192;&#8201;&#8201;</span>
   </div>
   <input type="text" name="title" id="title" class="form-control" placeholder="Please included title of the Bug" aria-label="Username" aria-describedby="addon-wrapping">
 </div>
@@ -13,7 +41,7 @@
   {{!-- <label for="title">Title:</label>
   <input type="text" name="title" id="title"> --}}
 
-<div class="input-group">
+<div class="input-group mt-3">
   <div class="input-group-prepend">
     <span class="input-group-text">Description:</span>
   </div>
@@ -24,19 +52,24 @@
   {{!-- <label for="description">Description:</label>
   <input type="text" name="description" id="description"> --}}
 
-  <label for="bugImg">Add a bug photo: </label>
-  <input type="file" name="bugImg" id="bugImg">
+<div class="input-group mb-3 mt-3">
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="bugImg" name="bugImg">
+    <label class="custom-file-label" for="bugImg">Add a bug photo:</label>
+  </div>
+</div>
 
   <p> <span> Do you want to report your bug <b>Anonymously</b>?</span> </p>
   <input name="anonym" id="cb" type="checkbox" aria-label="Checkbox for following text input" style="float: left; margin-top: 5px;>">
-  <div style="margin-left: 25px;">
+  <div style="margin-left: 25px;" class="mb-4">
     Anonymously
-  </div>  
+  </div>
 
 
 
-  <button type="submit" class="btn btn-primary">Publish</button>
+  <button type="submit" class="btn btn-success">Publish</button>
   <a href="/bugArea" class="btn btn-danger"> Discard</a>
-  
+
 
 </form>
+</div>

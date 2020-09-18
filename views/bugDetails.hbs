@@ -1,29 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand font-weight-bold" href="/bugArea">IronLibrary</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <a href="/addBug" class="btn btn-success mr-5">+ REPORT A BUG</a>
+      <li class="nav-item">
+        <a class="nav-link" href="/bugArea">BugArea</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ currentUser.name }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/userProfile">Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/logout">Logout</a>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</nav>
 <div class="row mt-5">
-<div class=" col-md-3 mx-auto mt-5" style="width: 20rem;">
-    <h5 class="card-title">{{ bug.title }}</h5>
+<div class="col-md-3 mx-auto mt-5" style="width: 20rem;">
+    <div class="card p-2 border-primary">
+    <h5 class="card-title ml-4"><span class="text-primary font-weight-bold">Bug Title:</span> {{ bug.title }}</h5>
     <div class="card-body">
       <img width="300" height="300" src="{{bug.imgPath}}" class="card-img-top" alt="{{bug.imgName}}">
-
-      <p class="card-text">Description: {{ bug.description }} <br> {{ bug.location }}</p>
-      <p class="card-text">Status: {{ bug.status }}</p>
-      <p class="card-text">Bootcamp: {{bugOwner.location}} - {{ bugOwner.timeType }}</p>
+      <div class="mt-4 mb-5">
+      <p class="card-tex ml-4"><span class="text-primary font-weight-bold">Description:</span> {{ bug.description }}</p>
+      <p class="card-text ml-4"><span class="text-primary font-weight-bold">Location:</span> {{ bug.location }}</p>
+      <p class="card-text ml-4"><span class="text-primary font-weight-bold">Status:</span> {{ bug.status }}</p>
+      <p class="card-text ml-4"><span class="text-primary font-weight-bold">Bootcamp:</span> {{bugOwner.location}} - {{ bugOwner.timeType }}</p>
 
       {{#if bug.anonym}}
-  <p>Author: Crazy Bugger </p>
+  <p class="ml-4"><span class="text-primary font-weight-bold">Author:</span> Crazy Bugger </p>
 {{else}}
-      <p>Author: {{ bugOwner.name }} </p>
+      <p class="ml-4"><span class="text-primary font-weight-bold">Author:</span> {{ bugOwner.name }} </p>
       {{/if}}
+      </div>
 
 {{#if isUserBug}}
-  <a href="/bugs/edit/{{bug._id}}" class="btn btn-outline-warning">Edit this Bug</a>
+  <a href="/bugs/edit/{{bug._id}}" class="btn btn-warning">Edit this Bug</a>
 
-  <a href="/bugs/delete/{{bug._id}}">Delete this Bug</a>
+  <a class="btn btn-danger" href="/bugs/delete/{{bug._id}}">Delete this Bug</a>
 {{/if}}
 
 
-<a href="/bugArea" class="btn btn-success">Back to All Bugs</a>
+<a href="/bugArea" class="btn btn-primary">Back to All Bugs</a>
 
     </div>
+  </div>
   </div>
 </div>
 
